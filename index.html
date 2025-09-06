@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MaybeCode 3.0(beta)</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/dracula.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.min.css">
+</head>
+<body>
+  <div id="app">
+    <div id="sidebar">
+      <div class="logo">
+        <img src="icon.png" alt="Logo" width="24" />
+        <h2>MaybeCode</h2>
+		<h4\>Next Apps</h4>
+      </div>
+
+      <div class="controls">
+        <button onclick="newTab()">+ New Tab</button>
+        <button onclick="openFile()">📁 Open</button>
+        <button onclick="saveFile()">💾 Save</button>
+        <button onclick="togglePreview()">📝 Markdown</button>
+        <button onclick="runHTML()">🌐 Run HTML</button>
+        <button onclick="runPython()">🐍 Run Python</button>
+
+        <hr>
+
+        <label>Language</label>
+        <select id="language-selector" onchange="changeLanguage(this.value)">
+          <option value="javascript">JavaScript</option>
+          <option value="python">Python</option>
+          <option value="html">HTML</option>
+          <option value="cpp">C++</option>
+          <option value="java">Java</option>
+        </select>
+
+        <label>Font</label>
+        <select onchange="updateFont(this.value)">
+          <option value="Consolas">Consolas</option>
+          <option value="Courier New">Courier New</option>
+          <option value="Arial">Arial</option>
+		  <option value="Script MT">Script MT</option>
+        </select>
+
+        <label>Theme</label>
+        <select onchange="toggleTheme(this.value)">
+          <option value="dark">Dark</option>
+          <option value="light">Light</option>
+        </select>
+
+        <input type="color" onchange="updateBG(this.value)" title="Editor background" />
+
+        <hr>
+        <h4>Extensions</h4>
+        <button onclick="loadExtension('hello')">Next-Apps</button>
+      </div>
+
+      <input type="file" id="file-input" style="display: none;" />
+    </div>
+
+    <main>
+      <div id="tabs"></div>
+
+      <div id="editor-area">
+        <textarea id="editor"></textarea>
+        <div id="preview" style="display: none;"></div>
+      </div>
+
+      <div id="console">
+        <strong style="color: lime;">Console Output</strong><br>
+        <pre id="console-output">Ready...</pre>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/clike/clike.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/edit/matchbrackets.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.min.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+        lineNumbers: true,
+        theme: 'dracula',
+        mode: 'javascript',
+        matchBrackets: true,
+        indentUnit: 4,
+        extraKeys: {"Ctrl-Space": "autocomplete"}
+      });
+
+      window.codeEditor = editor;
+    });
+  </script>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
